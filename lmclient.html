@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link href='http://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+<style type="text/css">
+  
+  body {
+    background-color: hsl(0, 60%, 65%);
+    transition: background-color 1s;
+}
+
+h1 {
+    font-family: 'Lato', sans-serif;
+    font-size: 120px;
+    font-weight: 100;
+    color: white;
+    text-align: center;
+    margin: 60px;
+}
+
+h1:before{
+  content: attr(class) ":";
+  font-size: 22px;
+  position: relative;
+  top: -69px;
+  left: 0;
+  text-transform: uppercase;
+}
+
+</style>
+
+  </head>
+  <body>
+    
+    <h1 class="temperature">0ºC</h1>
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script>
+  var socket = io(),
+  temperature = document.querySelector(".temperature");
+
+  socket.on('Temperature reading', function(message) {
+      // Rounding down the decimal values and adding ºC 
+      temperature.innerHTML = parseInt(message) + "ºC";
+
+      // Calculating the hue for the background color and changing it
+      var hue = 200 - (parseInt(message) * 5);
+      document.body.style.backgroundColor = "hsl(" + hue + ", 60%, 65%)";
+  });
+</script>
+
+  </body>
+</html>
